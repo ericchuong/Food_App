@@ -37,6 +37,7 @@ export default function App() {
           tabBarInactiveTintColor: 'black',
           tabBarActiveBackgroundColor: DEFAULT_BLUE,
           tabBarInactiveBackgroundColor: 'white',
+          tabBarHideOnKeyboard: true
         })}
       >
         <Tab.Screen name="List" component={ListScreen} />
