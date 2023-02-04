@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native"
+import './Constants';
+import Constants from "./Constants";
 
 export default StyleSheet.create({
     tabIcon: {
@@ -23,7 +25,7 @@ export default StyleSheet.create({
 
     nameTEW: {
         minWidth: 100,
-        maxWidth: 200,
+        maxWidth: 225,
         height: 30,
         flexGrow: 1,
         borderColor: "black",
@@ -91,5 +93,43 @@ export default StyleSheet.create({
         color: "gray",
         textAlign: "right",
         paddingTop: 5
+    },
+
+    inLineButtons: {
+        flexDirection: "row",
+        alignItems: "flex-end",
+        justifyContent: "flex-end"
+    },
+
+    clearButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 8,
+        paddingHorizontal: 5,
+        width: 100,
+        marginRight: 10,
+        borderRadius: 15
+    },
+
+    clearText: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: Constants.DEFAULT_BLUE
+    },
+
+    submitButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 8,
+        paddingHorizontal: 5,
+        backgroundColor: Constants.DEFAULT_BLUE,
+        width: 100,
+        borderRadius: 15
+    },
+
+    submitText: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: 'white'
     }
 })
