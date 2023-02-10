@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "expo-test-app",
-    "slug": "expo-test-app",
+    "name": "Food_App",
+    "slug": "foodapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

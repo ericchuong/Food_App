@@ -159,7 +159,7 @@ class AddScreen extends React.Component {
             </View>
 
             {/* This is the Description section */}
-            <View style={{marginTop: 25, marginBottom: 10}}>
+            <View style={{marginTop: 25}}>
               <Text style={styles.boldedFont}>Description:{"\n"}</Text>
               <TextInput value={this.state.descriptionState} multiline={true} style={styles.descriptionTEW} maxLength={Constants.MAX_DESCRIPTION_LENGTH} onChangeText={this.handleDescriptionChange}/>
               <Text style={styles.charactersLeft}>{Constants.MAX_DESCRIPTION_LENGTH-this.state.descriptionState.length} characters left</Text>
