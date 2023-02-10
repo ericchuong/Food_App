@@ -43,7 +43,8 @@ export default StyleSheet.create({
         borderWidth: 1,
         backgroundColor: "white",
         padding: 10,
-        textAlignVertical: "top"
+        textAlignVertical: "top",
+        marginTop: 5
     },
 
     inLineView: {
@@ -58,7 +59,7 @@ export default StyleSheet.create({
     },
 
     checkboxArea: {
-        marginTop: 15,
+        marginTop: 5,
     },
 
     checkboxGrid: {
