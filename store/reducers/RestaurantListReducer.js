@@ -1,13 +1,14 @@
 export const ACTION_TYPE_UPDATE_LIST = "UPDATE_LIST";
+import Images from '../../Images/Images';
 
 const initialState = {
-    listOfRestaurants: new Array()
+    listOfRestaurants: [{name: "TestName", category: [true, true, true, true, true, true, true, true], description: "Test Description", image: Images.letterT}]
 };
 
 const updateListOfRestaurants = (state, action) => {
     return {
         ...state,
-        listOfRestaurants: action.payload.listOfRestaurants
+        listOfRestaurants: action.payload
     }
 };
 
@@ -22,8 +23,6 @@ export const listOfRestaurantsReducer = (state = initialState, action) => {
 export const updateListOfRestaurantsInRedux = newList => {
     return {
         type: ACTION_TYPE_UPDATE_LIST,
-        payload: {
-            listOfRestaurants: newList
-        }
+        payload: newList
     }
 };

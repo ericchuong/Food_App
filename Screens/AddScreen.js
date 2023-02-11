@@ -13,12 +13,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Checkbox from 'expo-checkbox';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import Images from '../Images/Images';
-import styles from '../stylesheet';
+import styles from '../styles/stylesheet';
 import { connect } from 'react-redux';
 import { updateListOfRestaurantsInRedux } from '../store/reducers/RestaurantListReducer.js';
 import { Root, Popup } from 'react-native-popup-confirm-toast';
 import Constants from '../Constants';
 import { showPopup } from '../utils/popupUtil';
+import { getImageForName } from '../utils/imageUtil';
 
 const Button = (props) => {
   const { onPress, title, buttonStyle, textStyle } = props;
@@ -59,9 +60,8 @@ class AddScreen extends React.Component {
   }
 
   handleDescriptionChange = (characters) => {
-    if (characters) {
-      this.setState({descriptionState: characters});
-    }
+    console.log(characters);
+    this.setState({descriptionState: characters});
   }
 
   handleClear = () => {
@@ -75,6 +75,7 @@ class AddScreen extends React.Component {
 
   handleSubmit = async () => {
     const oldList = this.props.listOfRestaurants;
+    console.log(JSON.stringify(oldList));
 
     // Check for errors
     if (oldList.includes(this.state.nameState)) {
@@ -92,16 +93,24 @@ class AddScreen extends React.Component {
     }
     
     const newList = new Array();
-    oldList.forEach(restaurant => {
-      newList.push(restaurant);
+    oldList.forEach(restaurantData => {
+      newList.push(restaurantData);
     });
 
-    newList.push(this.state.nameState);
-    this.props.updateListOfRestaurants(newList);
+    const saveData = {
+      name: this.state.nameState,
+      category: this.state.checkState, 
+      description: this.state.descriptionState, 
+      image: getImageForName(this.state.nameState)
+    };
+
+    newList.push(saveData);
 
     try {
-      await AsyncStorage.setItem('@'+this.state.nameState, this.state.nameState);
+      await AsyncStorage.setItem(Constants.ACCESS_KEY, JSON.stringify(newList));
+      this.props.updateListOfRestaurants(newList);
       showPopup('confirm', this.state.nameState);
+      this.handleClear();
     } catch (e) {
       showPopup('error', this.state.nameState);
     }
@@ -128,7 +137,7 @@ class AddScreen extends React.Component {
                   <Image source={Images.info} style={styles.smallInfoIcon}/>
                 </TouchableWithoutFeedback>
               </Tooltip>
-              <TextInput style={styles.nameTEW} value={this.state.nameState} onChangeText={this.handleTEWChange} maxLength={Constants.MAX_NAME_LENGTH} placeholder="Enter food name" placeholderTextColor={"gray"}/>
+              <TextInput style={styles.nameTEW} value={this.state.nameState} onChangeText={this.handleTEWChange} maxLength={Constants.MAX_NAME_LENGTH} placeholder="Enter restaurant name" placeholderTextColor={"gray"}/>
             </View>
 
             {/* This is the Category section */}

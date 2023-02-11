@@ -1,15 +1,20 @@
 import React from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, 
+  View, 
+  Image, 
+  ScrollView,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import { updateListOfRestaurantsInRedux } from '../store/reducers/RestaurantListReducer.js';
+import styles from '../styles/stylesheet';
+import Constants from '../Constants.js';
 
 class ListScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      listState: new Array(0)
     }
 
     this.fetchData();
@@ -18,38 +23,57 @@ class ListScreen extends React.Component {
   fetchData = async () => {
     try {
       const keys = await AsyncStorage.getAllKeys();
-      const results = await AsyncStorage.multiGet(keys);
+      const results = JSON.parse(await AsyncStorage.getItem(Constants.ACCESS_KEY));
 
       let fetchedList = [];
-      results.forEach((name) => {
-        if (name.length > 0 && name[0].charAt(0) === '@') {
-          fetchedList.push(name[1]);
-          // console.log("fetched name: ", name[1]);
+
+      if (results) {
+        results.forEach((result) => {
+          if (result.name && result.name.length > 0) {
+            console.log("fetching: ", result.name);
+
+            const fetchedData = {
+              name: result.name,
+              category: result.category, 
+              description: result.description, 
+              image: result.image
+            };
+
+            fetchedList.push(fetchedData);
+          }
+        });
+
+        if (fetchedList.length > 0) {
+          this.props.updateListOfRestaurants(fetchedList);
         }
-      });
-      this.props.updateListOfRestaurants(fetchedList);
+      }
     } catch(e) {
       console.log("Error reading keys or values... ", e);
     }
   }
 
-  clearAll = async () => {
-    AsyncStorage.clear();
-  }
-
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-        <Text>List!</Text>
+      <ScrollView>
         {
-          this.props.listOfRestaurants.map((name, id) => (
-            <Text key={id}>{name}</Text>
+          this.props.listOfRestaurants.map((data, id) => (
+            <View key={id}>
+              <View style={styles.entryInList}>
+                <Image style={styles.listImage} source={data.image}/>
+                <View style={{flexShrink: 1}}>
+                  <Text style={styles.listNameText}>
+                    {data.name}
+                  </Text>
+                  <Text style={styles.listDescriptionText}>
+                      {data.description}
+                    </Text>
+                </View>
+              </View>
+              <View style={styles.horizontalLine}/>
+            </View>
           ))
         }
-        <View style={{ paddingTop: 100 }}>
-          <Button title="CLEAR DATABASE" onPress={this.clearAll}></Button>
-        </View>
-      </View>
+      </ScrollView>
     );
   }
 };

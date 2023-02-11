@@ -1,6 +1,5 @@
-import { StyleSheet } from "react-native"
-import './Constants';
-import Constants from "./Constants";
+import { StyleSheet } from "react-native";
+import Constants from "../Constants";
 
 export default StyleSheet.create({
     tabIcon: {
@@ -132,5 +131,40 @@ export default StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
         color: 'white'
+    },
+
+    entryInList: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 35,
+        marginBottom: 35,
+        marginLeft: "5%",
+        marginRight: "5%",
+    },
+
+    horizontalLine: {
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1,
+        width: "90%",
+        marginLeft: "5%"
+    },
+
+    listImage: {
+        width: 75,
+        height: 75,
+        borderWidth: 1,
+        borderColor: "black",
+        marginRight: 20,
+        backgroundColor: "lightgray",
+    },
+
+    listNameText: {
+        fontSize: 18,
+        fontWeight: "bold"
+    },
+
+    listDescriptionText: {
+        fontSize: 16,
+        marginTop: 10
     }
 })
