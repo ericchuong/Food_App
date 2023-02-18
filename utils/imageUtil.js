@@ -3,6 +3,12 @@ import Images from '../Images/Images';
 export function getImageForName(name) {
     const firstLetter = name[0].toUpperCase();
 
+    // Check if it's a number
+    if (/^\d+$/.test(firstLetter)) {
+        return Images.hashtag;
+    }
+    
+    // Return the image of the letter
     switch(firstLetter) {
         case 'A': return Images.letterA;
         case 'B': return Images.letterB;

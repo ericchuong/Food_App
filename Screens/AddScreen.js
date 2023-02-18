@@ -5,7 +5,6 @@ import { Platform,
   Image, 
   View, 
   TextInput, 
-  Pressable, 
   TouchableWithoutFeedback,
   ScrollView,
   KeyboardAvoidingView } from 'react-native';
@@ -13,28 +12,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Checkbox from 'expo-checkbox';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import Images from '../Images/Images';
-import styles from '../styles/stylesheet';
+import styles from '../styles/addStylesheet';
 import { connect } from 'react-redux';
 import { updateListOfRestaurantsInRedux } from '../store/reducers/RestaurantListReducer.js';
 import { Root, Popup } from 'react-native-popup-confirm-toast';
 import Constants from '../Constants';
 import { showPopup } from '../utils/popupUtil';
 import { getImageForName } from '../utils/imageUtil';
-
-const Button = (props) => {
-  const { onPress, title, buttonStyle, textStyle } = props;
-  return (
-    <Pressable style={buttonStyle} onPress={onPress}>
-      <Text style={textStyle}>{title}</Text>
-    </Pressable>
-  );
-}
+import Button from '../components/StyledButton.js';
 
 class AddScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    this.categories = ["American", "Chinese", "French", "German", "Indonesian", "Spanish", "Vietnamese", "Other"];
+    this.categories = ["American", "Chinese", "Italian", "Japanese", "Korean", "Mexican", "Taiwanese", "Vietnamese", "Other"];
 
     // State variables for all sections section
     this.state = {
@@ -60,7 +51,6 @@ class AddScreen extends React.Component {
   }
 
   handleDescriptionChange = (characters) => {
-    console.log(characters);
     this.setState({descriptionState: characters});
   }
 
@@ -75,44 +65,50 @@ class AddScreen extends React.Component {
 
   handleSubmit = async () => {
     const oldList = this.props.listOfRestaurants;
-    console.log(JSON.stringify(oldList));
+    let shouldUpdate = true;
 
     // Check for errors
-    if (oldList.includes(this.state.nameState)) {
-      // If entry already exists, show duplicate alert
-      showPopup('duplicate', this.state.nameState);
-      return;
-    } else if (this.state.nameState.length === 0) {
+    if (oldList.forEach(restaurantData => {
+      if (restaurantData.name === this.state.nameState) {
+        // If entry already exists, show duplicate alert
+        showPopup('duplicate', this.state.nameState);
+        shouldUpdate = false;
+      }
+    }));
+    
+    if (this.state.nameState.trim().length === 0) {
       // If name is empty, show alert
       showPopup('emptyName', this.state.nameState);
-      return;
+      shouldUpdate = false;
     } else if (this.state.checkState.length === 0 || !this.state.checkState.includes(true)) {
       // If no categories are selected, show alert
       showPopup('emptyCategory', this.state.nameState);
-      return;
+      shouldUpdate = false;
     }
     
-    const newList = new Array();
-    oldList.forEach(restaurantData => {
-      newList.push(restaurantData);
-    });
+    if (shouldUpdate) {
+      const newList = new Array();
+      oldList.forEach(restaurantData => {
+        newList.push(restaurantData);
+      });
 
-    const saveData = {
-      name: this.state.nameState,
-      category: this.state.checkState, 
-      description: this.state.descriptionState, 
-      image: getImageForName(this.state.nameState)
-    };
+      const saveData = {
+        name: this.state.nameState.trim(),
+        category: this.state.checkState,
+        description: this.state.descriptionState,
+        image: getImageForName(this.state.nameState.trim())
+      };
 
-    newList.push(saveData);
+      newList.push(saveData);
 
-    try {
-      await AsyncStorage.setItem(Constants.ACCESS_KEY, JSON.stringify(newList));
-      this.props.updateListOfRestaurants(newList);
-      showPopup('confirm', this.state.nameState);
-      this.handleClear();
-    } catch (e) {
-      showPopup('error', this.state.nameState);
+      try {
+        await AsyncStorage.setItem(Constants.ACCESS_KEY, JSON.stringify(newList));
+        this.props.updateListOfRestaurants(newList);
+        showPopup('confirm', this.state.nameState.trim());
+        this.handleClear();
+      } catch (e) {
+        showPopup('error', this.state.nameState);
+      }
     }
   }
 

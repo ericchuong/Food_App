@@ -7,7 +7,7 @@ import ListScreen from './Screens/ListScreen';
 import RandomizerScreen from './Screens/RandomizerScreen';
 import SwipeScreen from './Screens/SwipeScreen';
 import AddScreen from './Screens/AddScreen';
-import styles from './styles/stylesheet';
+import styles from './styles/appStylesheet';
 import Constants from './Constants';
 import { Provider } from 'react-redux';
 import store from './store/store';

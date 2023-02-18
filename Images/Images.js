@@ -33,4 +33,5 @@ export default {
     letterX: require('./letters/icons8-x-100.png'),
     letterY: require('./letters/icons8-y-100.png'),
     letterZ: require('./letters/icons8-z-100.png'),
+    hashtag: require('./letters/icons8-hashtag-100.png'),
 }
