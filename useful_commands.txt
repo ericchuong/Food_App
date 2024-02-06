@@ -1,0 +1,2 @@
+eas update - updates the app to expo so it can be run whenever
+npx expo start - runs the development version of the app

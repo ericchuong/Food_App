@@ -22,7 +22,7 @@ export default function App() {
           screenOptions={({ route }) => ({
             headerTintColor: 'white',
             headerStyle: {backgroundColor: Constants.DEFAULT_BLUE},
-            tabBarStyle: {height: 60},
+            tabBarStyle: {height: 90},
             tabBarLabelStyle: {fontSize: 13, marginBottom: 5},
             tabBarIcon: ({ color, size }) => {
               switch(route.name) {
@@ -45,7 +45,7 @@ export default function App() {
             tabBarHideOnKeyboard: true,
           })}
         >
-          <Tab.Screen name="List" component={ListScreen} />
+          <Tab.Screen name="List" component={ListScreen}/>
           <Tab.Screen name="Randomizer" component={RandomizerScreen} />
           <Tab.Screen name="Swipe" component={SwipeScreen} />
           <Tab.Screen name="Add" component={AddScreen} />
