@@ -34,7 +34,6 @@ class AddScreen extends React.Component {
       descriptionState: "",
       nameTooltipState: false,
       categoryTooltipState: false,
-      successModalState: false,
     }
   }
 

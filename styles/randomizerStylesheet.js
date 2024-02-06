@@ -31,4 +31,55 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         color: 'white'
     },
+
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        width: '75%',
+        height: '60%',
+        alignItems: 'center',
+        shadowColor: 'gray',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 100,
+        elevation: 5,
+    },
+
+    modalImage: {
+        width: 150,
+        height: 150,
+        borderWidth: 1,
+        borderColor: "black",
+        backgroundColor: "lightgray",
+    },
+
+    modalNameText: {
+        fontSize: 40,
+        fontWeight: 'bold',
+        marginTop: 10,
+        textAlign: 'center'
+    },
+
+    modalDescriptionText: {
+        fontSize: 16,
+        marginTop: 10,
+        textAlign: 'left',
+    },
+
+    mainNameText: {
+        fontSize: 40,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    }
 })

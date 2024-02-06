@@ -2,13 +2,13 @@ import React from 'react';
 import { Text, 
   View, 
   TouchableWithoutFeedback,
-  Platform,
-  Image } from 'react-native';
-import Tooltip from 'react-native-walkthrough-tooltip';
+  Image,
+  Modal } from 'react-native';
 import Images from '../Images/Images';
 import styles from '../styles/randomizerStylesheet';
 import Button from '../components/StyledButton.js';
 import { connect } from 'react-redux';
+import Constants from '../Constants.js';
 
 class RandomizerScreen extends React.Component {
   constructor(props) {
@@ -16,43 +16,70 @@ class RandomizerScreen extends React.Component {
 
     this.state = {
       tooltipState: false,
-      randomizerValue: 0,
+      currentIndex: 13,
+      timeRemaining: 0,
+      isModalVisible: false,
     }
   }
 
   randomize = () => {
-    let newRandomValue = this.state.randomizerValue;
-
+    // Only Randomize if there is more than 1 option in the list
     if (this.props.listOfRestaurants.length > 1) {
-     while (newRandomValue === this.state.randomizerValue) {
-        newRandomValue = Math.floor(Math.random() * this.props.listOfRestaurants.length);
-      }
-    }
+      // Set the time remaining
+      this.setState({
+        timeRemaining: Constants.RANDOMIZER_DURATION_IN_MSEC
+      });
 
-    this.setState({
-      randomizerValue: newRandomValue
-    });
+      // Start the interval
+      const countdownFn = setInterval(() => {
+        this.setState({
+          currentIndex: Math.floor(Math.random() * this.props.listOfRestaurants.length),
+          timeRemaining: this.state.timeRemaining - Constants.RANDOMIZER_INTERVAL_IN_MSEC,
+        });
+
+        if (this.state.timeRemaining <= 0) {
+          clearInterval(countdownFn);
+        }
+      }, Constants.RANDOMIZER_INTERVAL_IN_MSEC);
+    }
   }
 
   render() {
     return (
       <View style={{flex: 1, alignItems: 'center'}}>
+
+        <Modal 
+          visible={this.state.isModalVisible}
+          transparent={true}
+          presentationStyle='overFullScreen'
+          animationType='fade'
+          onRequestClose={() => this.setState({isModalVisible: false})}>
+            <TouchableWithoutFeedback onPress={() => this.setState({isModalVisible: false})}>
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Image style={styles.modalImage} source={this.props.listOfRestaurants[this.state.currentIndex].image}/>
+                  <View style={{flexShrink: 1}}>
+                    <Text style={styles.modalNameText}>
+                      {this.props.listOfRestaurants[this.state.currentIndex].name}
+                    </Text>
+                    <Text style={styles.modalDescriptionText}>
+                      {this.props.listOfRestaurants[this.state.currentIndex].description}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+        </Modal>
+
         {/* Top section. Text instructions */}
         <Text style={{marginTop: 10}}>Randomly Select from {this.props.listOfRestaurants.length} Options</Text>
-
+          
         {/* Center section. Result Name and the info icon */}
         <View style={[styles.inLineView, {top: '50%'}]}>
-          <Text style={{fontSize: 40, fontWeight: 'bold'}}>{this.props.listOfRestaurants[this.state.randomizerValue].name}</Text>
-          <Tooltip isVisible={this.state.tooltipState} 
-            content={<Text> Result Info Here </Text>}
-            placement="bottom"
-            onClose={() => this.setState({tooltipState: false})}
-            topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
-          >
-            <TouchableWithoutFeedback onPress={() => this.setState({tooltipState: true})}>
-              <Image source={Images.info} style={styles.smallInfoIcon}/>
-            </TouchableWithoutFeedback>
-          </Tooltip>        
+          <Text style={styles.mainNameText}>{this.props.listOfRestaurants[this.state.currentIndex].name}</Text>
+          <TouchableWithoutFeedback onPress={() => this.setState({isModalVisible: true})}>
+            <Image source={Images.info} style={styles.smallInfoIcon}/>
+          </TouchableWithoutFeedback>
         </View>
 
         {/* Bottom section. Button */}

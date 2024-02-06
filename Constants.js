@@ -5,6 +5,8 @@ const Constants = {
     MAX_DESCRIPTION_LENGTH: 100,
     ACCESS_KEY: '@restaurants',
     RESULTS_PER_PAGE: 10,
+    RANDOMIZER_DURATION_IN_MSEC: 1000,
+    RANDOMIZER_INTERVAL_IN_MSEC: 100,
 }
 
 export default Constants;
