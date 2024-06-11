@@ -2,8 +2,8 @@ import React from 'react';
 import { Text, 
   View, 
   Image, 
-  FlatList, 
-  Button } from 'react-native';
+  FlatList,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import { updateListOfRestaurantsInRedux } from '../store/reducers/RestaurantListReducer.js';
@@ -47,12 +47,9 @@ class SwipeScreen extends React.Component {
 
   render() {
     return (
-      // <ScrollView horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={true}>
-      //   {this.buildCards()}
-      //     {/* <View style={{ paddingTop: 100 }}>
+      //     <View style={{ paddingTop: 100 }}>
       //       <Button title="CLEAR DATABASE" onPress={this.clearAll}></Button>
-      //     </View> */}
-      // </ScrollView>
+      //     </View>
 
       <FlatList
         horizontal={true}

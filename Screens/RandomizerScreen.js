@@ -16,7 +16,7 @@ class RandomizerScreen extends React.Component {
 
     this.state = {
       tooltipState: false,
-      currentIndex: 13,
+      currentIndex: 0,
       timeRemaining: 0,
       isModalVisible: false,
     }
@@ -46,7 +46,7 @@ class RandomizerScreen extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1, alignItems: 'center'}}>
+      <View style={{flex: 1, alignItems: 'center', maxWidth: '95%'}}>
 
         <Modal 
           visible={this.state.isModalVisible}
@@ -75,15 +75,23 @@ class RandomizerScreen extends React.Component {
         <Text style={{marginTop: 10}}>Randomly Select from {this.props.listOfRestaurants.length} Options</Text>
           
         {/* Center section. Result Name and the info icon */}
-        <View style={[styles.inLineView, {top: '50%'}]}>
-          <Text style={styles.mainNameText}>{this.props.listOfRestaurants[this.state.currentIndex].name}</Text>
-          <TouchableWithoutFeedback onPress={() => this.setState({isModalVisible: true})}>
-            <Image source={Images.info} style={styles.smallInfoIcon}/>
-          </TouchableWithoutFeedback>
+        <View style={{top: '30%'}}>
+          <Text style={styles.mainNameText}>
+            {this.props.listOfRestaurants[this.state.currentIndex].name}
+            <View>
+              <TouchableWithoutFeedback onPress={() => this.setState({isModalVisible: true})}>
+                <Image source={Images.info} style={styles.smallInfoIcon}/>
+              </TouchableWithoutFeedback>
+            </View>
+          </Text>
         </View>
+        
 
         {/* Bottom section. Button */}
-        <Button title="Click Me!" buttonStyle={styles.button} textStyle={styles.buttonText} onPress={this.randomize}/>
+        <View style={{position: 'absolute', bottom: '20%'}}>
+          <Button title="Click Me!" buttonStyle={styles.button} textStyle={styles.buttonText} onPress={this.randomize}/>
+        </View>
+      
       </View>
     )
   }

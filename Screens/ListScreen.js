@@ -12,6 +12,7 @@ import styles from '../styles/listStylesheet';
 import Constants from '../Constants.js';
 import { calculateNumPages } from '../utils/pageUtil';
 import Button from '../components/StyledButton.js';
+import Toolbar from '../components/Toolbar.js';
 
 class ListScreen extends React.Component {
   constructor(props) {
@@ -159,15 +160,21 @@ class ListScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView ref={this.scrollRef}>
-        {this.showResultsForPage(this.props.currentPage)}
-        <View style={styles.inLinePageNum}>
-          {this.getPrevButton()}
-          {this.getPageNumberButtons()}
-          {this.getNextButton()}
-          <Text style={styles.pageOfPagesText}>{this.props.currentPage} of {calculateNumPages(this.props.listOfRestaurants)}</Text>
-        </View>
-      </ScrollView>
+      <View>
+        {/* Filter and Sort Toolbar */}
+        <Toolbar isSortAvailable={true}/>
+
+        {/* The results */}
+        <ScrollView ref={this.scrollRef}>
+          {this.showResultsForPage(this.props.currentPage)}
+          <View style={styles.inLinePageNum}>
+            {this.getPrevButton()}
+            {this.getPageNumberButtons()}
+            {this.getNextButton()}
+            <Text style={styles.pageOfPagesText}>{this.props.currentPage} of {calculateNumPages(this.props.listOfRestaurants)}</Text>
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 };

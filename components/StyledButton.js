@@ -1,10 +1,11 @@
-import { Pressable, Text } from 'react-native';
+import { Pressable, Text, Image } from 'react-native';
 
 const Button = (props) => {
-    const { onPress, title, buttonStyle, textStyle } = props;
+    const { onPress, title, buttonStyle, textStyle, icon } = props;
     return (
-        <Pressable style={buttonStyle} onPress={onPress}>
-        <Text style={textStyle}>{title}</Text>
+        <Pressable style={[buttonStyle, {display: 'flex', flexDirection: 'row', gap: 10}]} onPress={onPress}>
+            <Text style={textStyle}>{title}</Text>
+            {icon ? <Image source={icon} style={{width: 30, height: 30}}/> : null}
         </Pressable>
     );
 }

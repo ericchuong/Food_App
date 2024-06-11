@@ -1,11 +1,10 @@
 import { StyleSheet } from "react-native";
-import Constants from "../Constants";
 
 export default StyleSheet.create({  
     centeredView: {
         flex: 1,
         justifyContent: 'center',
-        width: 393
+        width: 411,
     },
 
     defaultView: {
