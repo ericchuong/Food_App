@@ -6,7 +6,7 @@ export default {
     info: require('./icons/info.png'),
     filter: require('./icons/filter.png'),
     angle: require('./icons/right-arrow-angle.png'),
-    arrow: require('./icons/up-arrow.png'),
+    upArrow: require('./icons/up-arrow.png'),
     letterA: require('./letters/icons8-a-100.png'),
     letterB: require('./letters/icons8-b-100.png'),
     letterC: require('./letters/icons8-c-100.png'),
@@ -34,4 +34,5 @@ export default {
     letterY: require('./letters/icons8-y-100.png'),
     letterZ: require('./letters/icons8-z-100.png'),
     hashtag: require('./letters/icons8-hashtag-100.png'),
+    downArrow: require('./icons/down-arrow.png'),
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Text, 
   View, 
   TouchableWithoutFeedback,
@@ -7,7 +8,7 @@ import { Text,
 import Images from '../Images/Images';
 import styles from '../styles/randomizerStylesheet';
 import Button from '../components/StyledButton.js';
-import { connect } from 'react-redux';
+import Toolbar from '../components/Toolbar.js';
 import Constants from '../Constants.js';
 
 class RandomizerScreen extends React.Component {
@@ -46,52 +47,56 @@ class RandomizerScreen extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1, alignItems: 'center', maxWidth: '95%'}}>
+      <View style={{flex: 1}}>
+        {/* Filter and Sort Toolbar */}
+        <Toolbar isSortAvailable={false}/>
 
-        <Modal 
-          visible={this.state.isModalVisible}
-          transparent={true}
-          presentationStyle='overFullScreen'
-          animationType='fade'
-          onRequestClose={() => this.setState({isModalVisible: false})}>
-            <TouchableWithoutFeedback onPress={() => this.setState({isModalVisible: false})}>
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <Image style={styles.modalImage} source={this.props.listOfRestaurants[this.state.currentIndex].image}/>
-                  <View style={{flexShrink: 1}}>
-                    <Text style={styles.modalNameText}>
-                      {this.props.listOfRestaurants[this.state.currentIndex].name}
-                    </Text>
-                    <Text style={styles.modalDescriptionText}>
-                      {this.props.listOfRestaurants[this.state.currentIndex].description}
-                    </Text>
+        {/* The rest of the page */}
+        <View style={{flex: 1, alignItems: 'center', maxWidth: '95%'}}>
+          <Modal 
+            visible={this.state.isModalVisible}
+            transparent={true}
+            presentationStyle='overFullScreen'
+            animationType='fade'
+            onRequestClose={() => this.setState({isModalVisible: false})}>
+              <TouchableWithoutFeedback onPress={() => this.setState({isModalVisible: false})}>
+                <View style={[styles.centeredView, {backgroundColor: "rgba(0, 0, 0, 0.5)"}]}>
+                  <View style={styles.modalView}>
+                    <Image style={styles.modalImage} source={this.props.listOfRestaurants[this.state.currentIndex].image}/>
+                    <View style={{flexShrink: 1}}>
+                      <Text style={styles.modalNameText}>
+                        {this.props.listOfRestaurants[this.state.currentIndex].name}
+                      </Text>
+                      <Text style={styles.modalDescriptionText}>
+                        {this.props.listOfRestaurants[this.state.currentIndex].description}
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-            </TouchableWithoutFeedback>
-        </Modal>
-
-        {/* Top section. Text instructions */}
-        <Text style={{marginTop: 10}}>Randomly Select from {this.props.listOfRestaurants.length} Options</Text>
-          
-        {/* Center section. Result Name and the info icon */}
-        <View style={{top: '30%'}}>
-          <Text style={styles.mainNameText}>
-            {this.props.listOfRestaurants[this.state.currentIndex].name}
-            <View>
-              <TouchableWithoutFeedback onPress={() => this.setState({isModalVisible: true})}>
-                <Image source={Images.info} style={styles.smallInfoIcon}/>
               </TouchableWithoutFeedback>
-            </View>
-          </Text>
-        </View>
-        
+          </Modal>
 
-        {/* Bottom section. Button */}
-        <View style={{position: 'absolute', bottom: '20%'}}>
-          <Button title="Click Me!" buttonStyle={styles.button} textStyle={styles.buttonText} onPress={this.randomize}/>
+          {/* Top section. Text instructions */}
+          <Text style={{marginTop: 10}}>Randomly Select from {this.props.listOfRestaurants.length} Options</Text>
+            
+          {/* Center section. Result Name and the info icon */}
+          <View style={{top: '30%'}}>
+            <Text style={styles.mainNameText}>
+              {this.props.listOfRestaurants[this.state.currentIndex].name}
+              <View>
+                <TouchableWithoutFeedback onPress={() => this.setState({isModalVisible: true})}>
+                  <Image source={Images.info} style={styles.smallInfoIcon}/>
+                </TouchableWithoutFeedback>
+              </View>
+            </Text>
+          </View>
+
+          {/* Bottom section. Button */}
+          <View style={{position: 'absolute', bottom: '20%'}}>
+            <Button title="Click Me!" buttonStyle={styles.button} textStyle={styles.buttonText} onPress={this.randomize}/>
+          </View>
+        
         </View>
-      
       </View>
     )
   }

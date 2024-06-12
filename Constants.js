@@ -9,6 +9,8 @@ const Constants = {
     RESULTS_PER_PAGE: 10,
     RANDOMIZER_DURATION_IN_MSEC: 1000,
     RANDOMIZER_INTERVAL_IN_MSEC: 100,
+    ASCENDING: "ascending",
+    DESCENDING: "descending",
 }
 
 export default Constants;

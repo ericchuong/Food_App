@@ -183,7 +183,7 @@ class AddScreen extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    listOfRestaurants: state.restaurantReducer.listOfRestaurants
+    listOfRestaurants: state.restaurantReducer.listOfRestaurants,
   }
 };
 

@@ -7,6 +7,8 @@ import { Text,
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import { updateListOfRestaurantsInRedux } from '../store/reducers/RestaurantListReducer.js';
+import {getCompareFn} from "../utils/sortUtil";
+import Toolbar from '../components/Toolbar.js';
 import styles from '../styles/swipeStylesheet';
 
 class SwipeScreen extends React.Component {
@@ -39,32 +41,33 @@ class SwipeScreen extends React.Component {
     )
   }
 
-  buildCards = () => {
-    return (
-      this.props.listOfRestaurants.map((data) => this.buildCard(data))
-    )
-  }
-
   render() {
     return (
       //     <View style={{ paddingTop: 100 }}>
       //       <Button title="CLEAR DATABASE" onPress={this.clearAll}></Button>
       //     </View>
 
-      <FlatList
+      <View>
+        {/* Filter and Sort Toolbar */}
+        <Toolbar isSortAvailable={true}/>
+
+        {/* List of cards */}
+        <FlatList
         horizontal={true}
-        data={this.props.listOfRestaurants}
+        data={this.props.listOfRestaurants.sort(getCompareFn(this.props.currentSort))}
         renderItem={({item}) => this.buildCard(item)}
         pagingEnabled={true}
         showsHorizontalScrollIndicator={false}
       />
+      </View>
     )
   }
 }
 
 const mapStateToProps = state => {
   return {
-    listOfRestaurants: state.restaurantReducer.listOfRestaurants
+    listOfRestaurants: state.restaurantReducer.listOfRestaurants,
+    currentSort: state.sortReducer.currentSort,
   }
 };
 

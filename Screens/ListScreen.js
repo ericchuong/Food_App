@@ -13,6 +13,7 @@ import Constants from '../Constants.js';
 import { calculateNumPages } from '../utils/pageUtil';
 import Button from '../components/StyledButton.js';
 import Toolbar from '../components/Toolbar.js';
+import {getCompareFn} from '../utils/sortUtil';
 
 class ListScreen extends React.Component {
   constructor(props) {
@@ -60,7 +61,9 @@ class ListScreen extends React.Component {
     const lowerIndex = (page - 1) * Constants.RESULTS_PER_PAGE;
     const upperIndex = page * Constants.RESULTS_PER_PAGE;
 
-    const slicedListOfRestaurants = this.props.listOfRestaurants.slice(lowerIndex, upperIndex);
+    // Sort the list first
+    const sortedListOfRestaurants = this.props.listOfRestaurants.sort(getCompareFn(this.props.currentSort));
+    const slicedListOfRestaurants = sortedListOfRestaurants.slice(lowerIndex, upperIndex);
 
     const showList = (data, id) => {
       return (
@@ -182,7 +185,8 @@ class ListScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     listOfRestaurants: state.restaurantReducer.listOfRestaurants,
-    currentPage: state.restaurantReducer.currentPage
+    currentPage: state.restaurantReducer.currentPage,
+    currentSort: state.sortReducer.currentSort,
   }
 };
 

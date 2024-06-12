@@ -22,7 +22,7 @@ export default function App() {
           screenOptions={({ route }) => ({
             headerTintColor: 'white',
             headerStyle: {backgroundColor: Constants.DEFAULT_BLUE},
-            tabBarStyle: {height: 90},
+            tabBarStyle: {height: 70},
             tabBarLabelStyle: {fontSize: 13, marginBottom: 5},
             tabBarIcon: ({ color, size }) => {
               switch(route.name) {

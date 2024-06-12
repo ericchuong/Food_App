@@ -22,7 +22,7 @@ export default StyleSheet.create({
     },
 
     toolbarText: {
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: 'bold',
         color: 'black',
     },
